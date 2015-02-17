@@ -1,0 +1,38 @@
+{
+	"name": "wooishui",
+	"icons": [
+		{
+			"src": "/img/apple-touch-iphone.png",
+			"sizes": "60x60",
+			"type": "image/png",
+			"density": "1.0"
+		},
+		{
+			"src": "/img/apple-touch-ipad.png",
+			"sizes": "72x72",
+			"type": "image/png",
+			"density": "1.5"
+		},
+		{
+			"src": "/img/apple-touch-iphone4.png",
+			"sizes": "120x120",
+			"type": "image/png",
+			"density": "2.0"
+		},
+		{
+			"src": "/img/apple-touch-ipad-retina.png",
+			"sizes": "152x152",
+			"type": "image/png",
+			"density": "3.0"
+		},
+		{
+			"src": "/img/apple-touch-iphone-raw.png",
+			"sizes": "280x280",
+			"type": "image/png",
+			"density": "4.0"
+		}
+	],
+	"start_url": "/",
+	"display": "standalone",
+	"orientation": "portrait"
+}
