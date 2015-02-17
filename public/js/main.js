@@ -138,16 +138,26 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 				sgd.framework7.alert('Please fill in an amount', ['Amount missing']);
 			}
 		};
+		
 	$$('.menu-link').on('click', function () {
-    	var buttons = [
-	        {
-	            text: 'Sign Out',
-	            onClick: function () {
-	                window.location.href = "/logout";
-	            }
-	        }
-	    ];
-	    _sgd.framework7.actions(buttons);
+		var buttons = [
+			{
+				text: 'Invite friend',
+				onClick: function () {
+					FB.ui({
+						method: 'send',
+						link: window.sgd.rootURL
+					});
+				}
+			},
+			{
+				text: 'Sign Out',
+				onClick: function () {
+					window.location.href = "/logout";
+				}
+			}
+		];
+		_sgd.framework7.actions(buttons);
 	});   
 	$(".debtType .left").on('click', function(){
 		$(".debtType .middle").addClass('creatorDebt');
@@ -165,6 +175,9 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 		_sgd.changeSection($(this).attr('href'));
 		_sgd.framework7.closePanel();
 		return false;
+	});
+	$('#inviteFriend').on('opened', function () {
+		_sgd.popupFriendList.startLoading();
 	});
 	$('#friendList').on('opened', function () {
 		_sgd.popupFriendList.startLoading();

@@ -38,7 +38,8 @@ module.exports = function(app, config) {
 	app.use(function (req, res, next) {
 		res.locals = {
 			fbAppID: config.FACEBOOK_APP_ID,
-			user: req.user || {}
+			user: req.user || {},
+			rootURL: process.env.appDoman || 'http://wooishui.herokuapp.com'
 		};
 		next();
 	});

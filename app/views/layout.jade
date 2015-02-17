@@ -48,12 +48,12 @@ html
 					div.navbar
 						div.navbar-inner
 							div.left
-								a.headerBtn.menu-link.icon-share-square(href="javascript:void(0)")
-							div.center
-							div.right
 								a#cancelBtn.headerBtn.txt(onclick="sgd.changeSection('home')") Cancel
 								a#backBtn.headerBtn.txt(onclick="sgd.changeSection('home')") Back
 								a#addBtn.icon-plus.headerBtn.active(onclick="sgd.changeSection('form')")
+							div.center
+							div.right
+								a.headerBtn.menu-link.icon-share-square(href="javascript:void(0)")
 				//- BODY
 
 				//- The Intro block appears above flash messages (used for temporary information display)
@@ -70,6 +70,7 @@ html
 		
 		script.
 			window.sgd = (window.sgd) ? window.sgd : {};
+			window.sgd.rootURL = '#{rootURL}';
 			window.sgd.fbAppID = '#{fbAppID}';
 			window.sgd.userUID = '#{user.uid}';
 		script(src='/components/jquery/dist/jquery.min.js')

@@ -10,6 +10,9 @@ module.exports = function (app) {
 };
 
 
+router.post('/debtsReject', function (req, res, next) {
+	res.json({ status: true });
+});
 router.post('/debtsRemove', function (req, res, next) {
 	var itemID = req.body.itemid;
 	var curUser = req.user;

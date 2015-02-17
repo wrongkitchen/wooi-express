@@ -90,7 +90,7 @@ define(function(){
 					this.listenTo(this.options.credits, 'all', this.render);
 				},
 				events: {
-					'click .settleBtn' : 'settleItem',
+					'click .removeBtn' : 'settleItem',
 					'click .rejectBtn' : 'rejectItem'
 				},
 				render: function(){

@@ -47,7 +47,7 @@ block content
 					div.row
 						div.col-100
 							a.button.button-fill.button-big(onclick="sgd.framework7.popup('#friendList')") Select other wooishui user
-
+							
 		div.page.cached#formSecond(data-page="form-second", data-nav="cancel")
 			div.page-content.infinite-scroll 
 				form#debtForm(action="post")
@@ -85,22 +85,22 @@ block content
 			
 block panel
 
-	//- div#inviteFriend.popup.page.navbar-fixed
-	//- 	div.navbar
-	//- 		div.navbar-inner
-	//- 			div.left
-	//- 			div.center Invite Friend
-	//- 			div.right 
-	//- 				a.headerBtn.black.icon-remove.close-popup(href="#")
+	div#inviteFriend.popup.page.navbar-fixed
+		div.navbar
+			div.navbar-inner
+				div.left
+				div.center Invite Friend
+				div.right 
+					a.headerBtn.black.icon-remove.close-popup(href="#")
 		
-	//- 	div.page-content
-	//- 		div.infinite-scroll
-	//- 			div.content-block
-	//- 				input.friendListSearch(type="text", placeholder="search", data-target="#nonRegFriend")
-	//- 			div#nonRegFriendWrapper
-	//- 				div.content-block-title FACEBOOK FRIEND LIST
-	//- 				div.list-block
-	//- 					ul#nonRegFriend
+		div.page-content
+			div.infinite-scroll
+				div.content-block
+					input.friendListSearch(type="text", placeholder="search", data-target="#nonRegFriend")
+				div#nonRegFriendWrapper
+					div.content-block-title FACEBOOK FRIEND LIST
+					div.list-block
+						ul#nonRegFriend
 
 	div#friendList.popup.page.navbar-fixed
 		div.navbar
@@ -132,7 +132,7 @@ block panel
 			<% } %>
 			<div class="item-inner">
 				<div class="item-title"><%=name%></div>
-				<div class="item-label <%=(price > 0) ? 'color-green' : 'color-red'%>">$<%=price%></div>
+				<div class="item-label <%=(price > 0) ? 'color-green' : 'color-red'%>">$<%= (price % 1)? price.toFixed(2) : price %></div>
 			</div>
 			<input type="hidden" class="cid" value="<%=id%>"></input>
 		</li>
@@ -144,7 +144,7 @@ block panel
 				<div class="item-inner">
 					<div class="item-title-row">
 						<div class="item-title"><%=moment(createdAt).format("YYYY-MM-DD HH:mm")%></div>
-						<div class="item-after <%=(price > 0) ? 'color-green' : 'color-red'%>">$<%=price%></div>
+						<div class="item-after <%=(price > 0) ? 'color-green' : 'color-red'%>">$<%= (price % 1)? price.toFixed(2) : price %></div>
 					</div>
 					<div class="item-subtitle">Debt owner: <%= creatorName %></div>
 					<div class="item-text"><%= (typeof(desc) == 'undefined') ? 'NO DESCRIPTION' : desc %></div>
@@ -152,11 +152,11 @@ block panel
 			</div>
 			<% if(settlable){ %>
 				<div class="swipeout-actions-right">
-					<a href="javascript:void(0)" data-itemid="<%=_id%>" class="settleBtn bg-red">REMOVE</a>
+					<a href="javascript:void(0)" data-itemid="<%=_id%>" class="swipeout-delete removeBtn">REMOVE</a>
 				</div>
 			<% } else { %>
 				<div class="swipeout-actions-right">
-					<a href="javascript:void(0)" data-itemid="<%=_id%>" class="rejectBtn bg-red">REJECT</a>
+					<a href="javascript:void(0)" data-itemid="<%=_id%>" class="bg-red rejectBtn">REJECT</a>
 				</div>
 			<% } %>
 		</li>
