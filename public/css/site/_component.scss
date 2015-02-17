@@ -36,7 +36,7 @@
 	#backBtn{ display:none; }
 	.headerBtn{
 		font-size: 24px; height: 100%; line-height: 50px; z-index: 10;
-	    border: none; text-align: center; color: #FFF;
+	    border: none; text-align: center; color: #FFF; margin:0;
 	    display: block;
 	    &.txt{ font-size:18px; }
 	    &.black{ color:#000; }
@@ -80,4 +80,10 @@ p.or{ text-align: center; }
 	text-align: center; display:none;
 	.icon-page-search{ font-size:3em; }
 	.txt{ font-size:1.5em; margin-top: 30px; }
+}
+#dataListDetail .swipeout{
+	.item-title-row{
+		background:none; padding-right:15;
+		&:after{ content: "a"; font-family: wooishui; position: absolute; right: 10px; color: #000; top: 10px; }
+	}
 }

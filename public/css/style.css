@@ -34,7 +34,7 @@ a {
 #header {
   position: relative; }
   #header .navbar {
-    background-color: #78FF8D; }
+    background-color: #78ff8d; }
   #header .left, #header .center, #header .right {
     height: 100%; }
   #header .logo {
@@ -78,12 +78,12 @@ a {
     color: #216C2A;
     opacity: 1; }
   .debtType .middle .icon-caret-left {
-    color: #BBBBBB;
+    color: #bbbbbb;
     opacity: .8; }
   .debtType .middle .icon-banknote {
     color: #216C2A; }
   .debtType .middle.creatorDebt .icon-caret-right {
-    color: #BBBBBB;
+    color: #bbbbbb;
     opacity: .8; }
   .debtType .middle.creatorDebt .icon-caret-left {
     color: #216C2A;
@@ -115,9 +115,9 @@ a {
   color: white;
   -o-text-overflow: clip;
   text-overflow: clip;
-  background: -webkit-linear-gradient(45deg, rgba(0, 222, 34, 0.2) 25%, transparent 25%, transparent 50%, rgba(0, 222, 34, 0.2) 50%, rgba(0, 222, 34, 0.2) 75%, transparent 75%, transparent 0), #78ff8d;
-  background: -moz-linear-gradient(45deg, rgba(0, 222, 34, 0.2) 25%, transparent 25%, transparent 50%, rgba(0, 222, 34, 0.2) 50%, rgba(0, 222, 34, 0.2) 75%, transparent 75%, transparent 0), #78ff8d;
-  background: linear-gradient(45deg, rgba(0, 222, 34, 0.2) 25%, transparent 25%, transparent 50%, rgba(0, 222, 34, 0.2) 50%, rgba(0, 222, 34, 0.2) 75%, transparent 75%, transparent 0), #78ff8d;
+  background: -webkit-linear-gradient(45deg, rgba(0, 222, 34, 0.2) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(0, 222, 34, 0.2) 50%, rgba(0, 222, 34, 0.2) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0) 0), #78ff8d;
+  background: -moz-linear-gradient(45deg, rgba(0, 222, 34, 0.2) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(0, 222, 34, 0.2) 50%, rgba(0, 222, 34, 0.2) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0) 0), #78ff8d;
+  background: linear-gradient(45deg, rgba(0, 222, 34, 0.2) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(0, 222, 34, 0.2) 50%, rgba(0, 222, 34, 0.2) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0) 0), #78ff8d;
   background-position: auto auto;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -146,6 +146,7 @@ a {
   border: none;
   text-align: center;
   color: #FFF;
+  margin: 0;
   display: block; }
   #header .headerBtn.txt {
     font-size: 18px; }
@@ -217,4 +218,13 @@ p.or {
     font-size: 1.5em;
     margin-top: 30px; }
 
-/*# sourceMappingURL=style.css.map */
+#dataListDetail .swipeout .item-title-row {
+  background: none;
+  padding-right: 15; }
+  #dataListDetail .swipeout .item-title-row:after {
+    content: "a";
+    font-family: wooishui;
+    position: absolute;
+    right: 10px;
+    color: #000;
+    top: 10px; }
