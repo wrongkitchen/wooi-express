@@ -1,0 +1,83 @@
+.facebookLogin{ 
+	background-image: url(../img/facebook-login.png); 
+	width:202px; height:45px; position:absolute; top:50%; margin-top:22px;
+	left:50%; margin-left:-101px;
+}
+.gradient-pattern {
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	border: none;
+	font: normal 100%/normal Arial, Helvetica, sans-serif;
+	color: rgba(255,255,255,1);
+	-o-text-overflow: clip;
+	text-overflow: clip;
+	background: -webkit-linear-gradient(45deg, rgba(0,222,34,0.2) 25%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 50%, rgba(0,222,34,0.2) 50%, rgba(0,222,34,0.2) 75%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 0), rgb(120,255,141);
+	background: -moz-linear-gradient(45deg, rgba(0,222,34,0.2) 25%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 50%, rgba(0,222,34,0.2) 50%, rgba(0,222,34,0.2) 75%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 0), rgb(120,255,141);
+	background: linear-gradient(45deg, rgba(0,222,34,0.2) 25%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 50%, rgba(0,222,34,0.2) 50%, rgba(0,222,34,0.2) 75%, rgba(0,0,0,0) 75%, rgba(0,0,0,0) 0), rgb(120,255,141);
+	background-position: auto auto;
+	-webkit-background-origin: padding-box;
+	background-origin: padding-box;
+	-webkit-background-clip: border-box;
+	background-clip: border-box;
+	-webkit-background-size: 50px 50px;
+	background-size: 50px 50px;
+}
+#header{
+	&.cancel{
+		#cancelBtn{ display:block; }  
+		#backBtn, #addBtn{ display:none; }  
+	}
+	&.back{
+		#backBtn{ display:block; }  
+		#cancelBtn, #addBtn{ display:none; }  
+	}
+	#cancelBtn{ display:none; }
+	#backBtn{ display:none; }
+	.headerBtn{
+		font-size: 24px; height: 100%; line-height: 50px; z-index: 10;
+	    border: none; text-align: center; color: #FFF;
+	    display: block;
+	    &.txt{ font-size:18px; }
+	    &.black{ color:#000; }
+	}
+}
+#formSecond{
+	.buttons-row .button{ 
+		border-radius: 0; background: #BBB; border: 1px solid #BBB;
+		text-decoration: line-through;
+		&.active{ background: #FFF; color:#000; text-decoration: none; }
+	}
+}
+#menu{ 
+	ol, ul{ 
+		list-style: none; padding:0;
+		li{ border-bottom:1px solid #BBB; padding:10px 20px; }
+	}
+	a{ border:none; }
+	.userDetail{
+		margin-bottom:15px;
+		.img{ width:50px; height:50px; }
+		.name{ vertical-align: middle; }
+	}
+}
+p.or{ text-align: center; }
+#friendList{
+	#regFriend{ display:none; }
+	#nonRegFriend{ display:none; }
+}
+.friendListSearch{ 
+	background-color: #fff; border: 1px solid #BBB; border-radius: 10px; 
+	width:100%; height:35px; text-indent: 7px; padding-left: 0; padding-right: 0;
+}
+.list-block .item-after{
+	&.color-red{ color:#ff3b30; }
+	&.color-green{ color:#4cd964; }
+}
+.item-media{ width:50px; height:50px; }
+#dataListDetailWrap{ display:none; }
+#dataListError, #dataListDetailError{ 
+	text-align: center; display:none;
+	.icon-page-search{ font-size:3em; }
+	.txt{ font-size:1.5em; margin-top: 30px; }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "wooishui-express",
+  "version": "0.0.1",
+  "authors": [
+    "kenji@sekgamdong.com"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.11.1",
+    "requirejs": "~2.1.15",
+    "backbone": "~1.1.2",
+    "framework7": "~1.0.0",
+    "momentjs": "~2.9.0"
+  }
+}

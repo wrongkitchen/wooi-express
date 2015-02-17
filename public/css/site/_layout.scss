@@ -1,0 +1,57 @@
+html, body{ width:100%; height:100%; padding:0; margin:0; }
+body{ 
+	font-family: 'Quicksand', sans-serif; font-size:$font-size-base; position:relative; 
+	&.unauthorized{ 
+		#footer{ 
+			color:#FFF; text-align: center;
+			p{ border:none; }
+			a{ color:#FFF; border:none; }
+		}
+	}
+}
+a{ 
+	text-decoration: none; color: green; border-bottom: 1px dashed green; 
+	&.headerBtn{ border: none; }
+}
+
+.container{ margin: 0 auto; padding: 0 2em; }
+#layout{ min-height:100%; }
+#header{ 
+	position:relative;
+	.navbar{ background-color: $main-theme-color; }
+	.left, .center, .right{ 
+		height:100%; 
+	}
+	.logo{ 
+		position:absolute; top:0; height:100%; width:98px; left:50%; 
+		margin-left:-49px; z-index:1000; font-size:28px;
+		font-family:'Lobster', cursive; color:#FFF; 
+	}
+	.center{ font-size:28px; }
+}
+#menu{ background-color: #FFF; border-right: 1px solid #BBB; }
+#footer { 
+	color: #ccc; width:100%; height:$footer-height;
+	position:absolute; bottom:0;
+	p{ padding:20px 0 0 0; margin:0 20px; border-top: 1px solid #ccc; }
+}
+.debtType{
+	.left{ 
+		text-align: right; 
+		img{ height:50px; }
+	} 
+	.middle{ 
+		text-align: center; font-size:2em; line-height:2em; 
+		.icon-caret-right{ color:#216C2A; opacity: 1; }
+		.icon-caret-left{ color:$grey-theme-color; opacity: .8; }
+		.icon-banknote{ color:#216C2A; }
+		&.creatorDebt{
+			.icon-caret-right{ color:$grey-theme-color; opacity: .8; }
+			.icon-caret-left{ color:#216C2A; opacity: 1; }
+		}
+	} 
+	.right{ 
+		display: table; height:50px;
+		span{ display:table-cell; vertical-align: middle; text-align: left; }
+	}
+}

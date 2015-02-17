@@ -1,0 +1,86 @@
+doctype html
+html
+
+	//- HTML HEADER
+	head
+		meta(charset="utf-8")
+		meta(http-equiv="X-UA-Compatible" content="IE=edge")
+		meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui")
+		meta(name="apple-mobile-web-app-capable", content="yes")
+
+		title= title || 'wooishui'
+		link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
+
+		link(href="https://fontastic.s3.amazonaws.com/CWNp47vRfsX6Apg6FPgnZg/icons.css", rel="stylesheet")
+		link(href="http://fonts.googleapis.com/css?family=Quicksand:400,700", rel="stylesheet")
+		link(href="http://fonts.googleapis.com/css?family=Lobster", rel="stylesheet")
+		link(href="/components/framework7/dist/css/framework7.min.css", rel="stylesheet")
+		
+		link(rel="apple-touch-icon",href="/img/apple-touch-iphone.png")
+		link(rel="apple-touch-icon",sizes="72x72",href="/img/apple-touch-ipad.png")
+		link(rel="apple-touch-icon",sizes="120x120",href="/img/apple-touch-iphone4.png")
+		link(rel="apple-touch-icon",sizes="144x144",href="/img/apple-touch-ipad-retina.png")
+
+		link(href="/css/style.css", rel="stylesheet")
+
+		//- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+		//- Safely remove this block if you are not targeting IE8
+		//-[if lt IE 9]
+			script(src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js")
+			script(src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js")
+		//-[endif]
+
+		//- Include template-specific stylesheets by extending the css block
+		block css
+
+		//- Add any other template-specific HEAD tags by extending the head block
+		block head
+
+		//- HTML BODY
+	body
+		div#layout.views
+			//- HEADER
+			div.view.view-main
+				div#header
+					div.logo wooishui
+					div.navbar
+						div.navbar-inner
+							div.left
+								a.headerBtn.menu-link.icon-share-square(href="javascript:void(0)")
+							div.center
+							div.right
+								a#cancelBtn.headerBtn.txt(onclick="sgd.changeSection('home')") Cancel
+								a#backBtn.headerBtn.txt(onclick="sgd.changeSection('home')") Back
+								a#addBtn.icon-plus.headerBtn.active(onclick="sgd.changeSection('form')")
+				//- BODY
+
+				//- The Intro block appears above flash messages (used for temporary information display)
+				block intro
+
+				//- The content block should contain the body of your template's content
+				block content
+
+				//- FOOTER
+				//- #footer
+				//-   p Powered by <a href="http://www.sekgamdong.com" target="_blank">SEKGAMDONG CO.</a>.
+
+		block panel
+		
+		script.
+			window.sgd = (window.sgd) ? window.sgd : {};
+			window.sgd.fbAppID = '#{fbAppID}';
+			window.sgd.userUID = '#{user.uid}';
+		script(src='/components/jquery/dist/jquery.min.js')
+		script(src='/components/underscore/underscore-min.js')
+		script(src='/components/backbone/backbone.js')
+		script(src='/components/momentjs/min/moment.min.js')
+		script(src='/components/framework7/dist/js/framework7.min.js')
+		script(src='/components/requirejs/require.js')
+		script(src='/js/config.js')
+		script(src='/js/main.js')
+
+
+		//- Add scripts that are globally required by your site here.
+
+		//- Include template-specific javascript files by extending the js block
+		block js

@@ -1,0 +1,36 @@
+{
+  "name": "wooishui-express",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "postinstall": "bower install",
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "~4.10.6",
+    "serve-favicon": "~2.1.7",
+    "morgan": "~1.5.0",
+    "cookie-parser": "~1.3.3",
+    "body-parser": "~1.10.0",
+    "compression": "~1.2.2",
+    "method-override": "~2.3.0",
+    "glob": "~4.3.1",
+    "mongoose": "~3.8.20",
+    "jade": "~1.8.1",
+    "passport": "^0.2.1",
+    "passport-facebook": "^1.0.3",
+    "bower": "^1.3.12",
+    "express-session": "^1.10.2",
+    "node-uuid": "^1.4.2"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-develop": "~0.4.0",
+    "grunt-contrib-sass": "~0.8.1",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-compass": "~0.9.0",
+    "request": "~2.51.0",
+    "time-grunt": "~1.0.0",
+    "load-grunt-tasks": "~1.0.0"
+  }
+}

@@ -1,0 +1,162 @@
+extends layout
+
+		
+block content
+
+	div.pages
+		div.page(data-page="home")
+			div#homeDebts.page-content.infinite-scroll.pull-to-refresh-content
+				div.pull-to-refresh-layer
+					div.preloader
+					div.pull-to-refresh-arrow
+				div.content-block-title#dataListError 
+					span.icon-page-search
+					div.txt Cannot find any debt
+				div#dataListWrap
+					div.content-block-title My debts
+					div.list-block
+						ul#dataList
+
+		div.page.cached(data-page="detail", data-nav="back")
+			div.page-content.infinite-scroll 
+				div.content-block-title#dataListDetailError 
+					span.icon-page-search
+					div.txt Cannot find any debt of this user
+				div#dataListDetailWrap
+					div.content-block-title Debts detail
+					div.list-block.media-list
+						ul#dataListDetail
+
+		div.page.cached(data-page="form", data-nav="cancel")
+			div.page-content.infinite-scroll 
+				div.content-block-title Create new debt
+				div.list-block
+					ul
+						li.item-content
+							div.item-inner
+								div.item-title.label Name
+								div.item-input
+									input#otherUserName(type="text", placeholder="Name")
+				div.content-block
+					div.row
+						div.col-100
+							a.button.button-fill.color-red.button-big(onclick="sgd.changeSection('form-second', [], true)") Enter
+				div.content-block-label 
+					p.or or
+				div.content-block
+					div.row
+						div.col-100
+							a.button.button-fill.button-big(onclick="sgd.framework7.popup('#friendList')") Select other wooishui user
+
+		div.page.cached#formSecond(data-page="form-second", data-nav="cancel")
+			div.page-content.infinite-scroll 
+				form#debtForm(action="post")
+					div.content-block
+						div.row.debtType
+							div.col-33.left
+								img(src="http://graph.facebook.com/#{user.uid}/picture", height="50")
+							div.col-33.middle
+								div.row
+									div.col-33
+										span.icon-caret-left
+									div.col-33
+										span.icon-banknote
+									div.col-33
+										span.icon-caret-right
+							div.col-33.right 
+								img(src="http://graph.facebook.com/#{user.uid}/picture", height="50")
+					div.list-block
+						ul
+							li.item-content
+								div.item-inner
+									div.item-title.label AMOUNT
+									div.item-input
+										input(type="number", placeholder="AMOUNT", name="price")
+							li.item-content.align-top
+								div.item-inner
+									div.item-title.label DESCRIPTION
+									div.item-input
+										input(type="text", placeholder="DESCRIPTION", name="desc")
+					input#otherUserID(type="hidden")
+					div.content-block
+						div.row
+							div.col-100
+								a.button.button-fill.button-big.color-red(href="javascript:void(0)", onclick="sgd.submitDebt()") CONFIRM
+			
+block panel
+
+	//- div#inviteFriend.popup.page.navbar-fixed
+	//- 	div.navbar
+	//- 		div.navbar-inner
+	//- 			div.left
+	//- 			div.center Invite Friend
+	//- 			div.right 
+	//- 				a.headerBtn.black.icon-remove.close-popup(href="#")
+		
+	//- 	div.page-content
+	//- 		div.infinite-scroll
+	//- 			div.content-block
+	//- 				input.friendListSearch(type="text", placeholder="search", data-target="#nonRegFriend")
+	//- 			div#nonRegFriendWrapper
+	//- 				div.content-block-title FACEBOOK FRIEND LIST
+	//- 				div.list-block
+	//- 					ul#nonRegFriend
+
+	div#friendList.popup.page.navbar-fixed
+		div.navbar
+			div.navbar-inner
+				div.left
+				div.center Friend list
+				div.right 
+					a.headerBtn.black.icon-remove(onclick="sgd.framework7.closeModal()")
+		
+		div.page-content.infinite-scroll
+			div.content-block
+				input.friendListSearch(type="text", placeholder="search", data-target="#regFriend")
+			div#regFriendWrapper
+				div.content-block-title WOOISHUI USER
+				div.list-block
+					ul#regFriend
+
+	script#regFriendList(type="text/template").
+		<li class="item-content" data-userid='<%=id%>' class="close-popup">
+			<div class="item-media" style='background-image:url(http://graph.facebook.com/<%=id%>/picture)'></div>
+			<div class="item-inner">
+				<div class="item-title"><%=name%></div>
+			</div>
+		</li>
+	script#mainListTmpl(type="text/template").
+		<li class="item-content">
+			<% if(id.indexOf('-') < 0){ %>
+				<div class="item-media" style="background-image:url(http://graph.facebook.com/<%=id%>/picture)"></div>
+			<% } %>
+			<div class="item-inner">
+				<div class="item-title"><%=name%></div>
+				<div class="item-label <%=(price > 0) ? 'color-green' : 'color-red'%>">$<%=price%></div>
+			</div>
+			<input type="hidden" class="cid" value="<%=id%>"></input>
+		</li>
+	script#emptyDetail(type="text/template").
+		<div class="list-block-label">it is empty</div>
+	script#detailTmpl(type="text/template").
+		<li class="swipeout" id="item_<%=_id%>">
+			<div class="item-link swipeout-content item-content">
+				<div class="item-inner">
+					<div class="item-title-row">
+						<div class="item-title"><%=moment(createdAt).format("YYYY-MM-DD HH:mm")%></div>
+						<div class="item-after <%=(price > 0) ? 'color-green' : 'color-red'%>">$<%=price%></div>
+					</div>
+					<div class="item-subtitle">Debt owner: <%= creatorName %></div>
+					<div class="item-text"><%= (typeof(desc) == 'undefined') ? 'NO DESCRIPTION' : desc %></div>
+				</div>
+			</div>
+			<% if(settlable){ %>
+				<div class="swipeout-actions-right">
+					<a href="javascript:void(0)" data-itemid="<%=_id%>" class="settleBtn bg-red">REMOVE</a>
+				</div>
+			<% } else { %>
+				<div class="swipeout-actions-right">
+					<a href="javascript:void(0)" data-itemid="<%=_id%>" class="rejectBtn bg-red">REJECT</a>
+				</div>
+			<% } %>
+		</li>
