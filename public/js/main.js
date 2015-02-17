@@ -145,8 +145,11 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 				text: 'Invite friend',
 				onClick: function () {
 					FB.ui({
-						method: 'send',
-						link: window.sgd.rootURL
+						method: 'apprequests',
+						title : 'wooishui',
+						message: "Lets use wooishui to maintain your debts!"
+					}, function(response){
+						
 					});
 				}
 			},
