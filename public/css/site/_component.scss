@@ -83,7 +83,7 @@ p.or{ text-align: center; }
 }
 #dataListDetail .swipeout{
 	.item-title-row{
-		background:none; padding-right:15;
+		background:none; padding-right:15px;
 		&:after{ content: "a"; font-family: wooishui; position: absolute; right: 10px; color: #000; top: 10px; }
 	}
 }

@@ -220,7 +220,7 @@ p.or {
 
 #dataListDetail .swipeout .item-title-row {
   background: none;
-  padding-right: 15; }
+  padding-right: 15px; }
   #dataListDetail .swipeout .item-title-row:after {
     content: "a";
     font-family: wooishui;
