@@ -154,5 +154,9 @@ block panel
 				<div class="swipeout-actions-right">
 					<a href="javascript:void(0)" data-itemid="<%=_id%>" class="swipeout-delete removeBtn">REMOVE</a>
 				</div>
+			<% } else { %>
+				<div class="swipeout-actions-right">
+					<a href="javascript:void(0)" data-itemid="<%=_id%>" class="bg-red rejectBtn">REJECT</a>
+				</div>
 			<% } %>
 		</li>
