@@ -31,8 +31,8 @@ var config = {
 		app: {
 			name: 'wooishui'
 		},
-		port: 80,
-		db: 'mongodb://localhost/wooishui',
+		port: process.env.PORT,
+		db: process.env.MONGOLAB_URI,
 		FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
 		FACEBOOK_APP_SECRET: process.env.FACEBOOK_APP_SECRET
 	}
