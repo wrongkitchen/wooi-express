@@ -9,6 +9,7 @@ var DebtSchema = new Schema({
 	debtorsName: { type: String, required: true },
 	price: { type: Number, required: true },
 	desc: String,
+	reject: String,
 	hidden: { type: Boolean, default:false },
 	createdAt: { type: Date, default: Date.now }
 });

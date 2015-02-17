@@ -25,6 +25,7 @@ define(function(){
 			});
 			var creditsDetail = new _creditsDetail();
 			_this.creditsDetail = creditsDetail;
+
 			var _creditView = Backbone.View.extend({
 				el: '#dataList',
 				mainListTemplate: _.template($("#mainListTmpl").html()),
@@ -50,8 +51,7 @@ define(function(){
 									allData.add({ 
 										id: obj[pIndexKey],
 										name: _name,
-										price: (pIndexKey == 'debtorsUID') ? obj.price : (obj.price * -1),
-										fbConnected: obj.fbConnected
+										price: (pIndexKey == 'debtorsUID') ? obj.price : (obj.price * -1)
 									});
 								} else {
 									var curPrice = dataModel[0].get('price');
@@ -126,6 +126,7 @@ define(function(){
 					});
 				},
 				rejectItem: function(e){
+					var _view = this;
 					var itemID = $(e.currentTarget).data('itemid');
 					sgd.framework7.prompt('Why do u reject this debt?', 'Reject debt', function (value) {
 						if(value != ""){
@@ -135,7 +136,11 @@ define(function(){
 								data: { itemid: itemID, reason: value },
 								success: function (data) {
 									if(data.status){
-										$("#item_" + itemID).remove();
+										sgd.framework7.swipeoutDelete("#item_" + itemID, function(a,b,c){
+											var _item = _view.options.credits.where({ _id : itemID });
+											var _removed = _view.options.credits.remove(_item);
+											console.log(_removed);
+										});
 									}
 								}
 							});
@@ -143,7 +148,7 @@ define(function(){
 					});
 				}
 			});
-
+	
 			var creditView = new _creditView({
 				credits: _this.credits
 			});

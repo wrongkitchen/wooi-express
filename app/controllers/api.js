@@ -11,7 +11,30 @@ module.exports = function (app) {
 
 
 router.post('/debtsReject', function (req, res, next) {
-	res.json({ status: true });
+	var itemID = req.body.itemid;
+	var reason = req.body.reason;
+	var curUser = req.user;
+	if(curUser){
+		if(itemID){
+			Debt.where('_id', itemID)
+			.or([{ creditorUID : curUser.uid }, { debtorsUID : curUser.uid }])
+			.findOne(function(err, data){
+				if(err){
+					res.status(500).json({ error: err });
+				} else if(data){
+					data.reject = reason;
+					data.save(function(err, data){
+						if(err)
+							res.status(500).json({ error: err });
+						else
+							res.json({ status: true, message: "success" });
+					});
+				} else {
+					res.status(500).json({ error: 'no such data' });
+				}
+			})
+		}
+	}
 });
 router.post('/debtsRemove', function (req, res, next) {
 	var itemID = req.body.itemid;
