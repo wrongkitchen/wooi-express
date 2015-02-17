@@ -147,7 +147,8 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 					FB.ui({
 						method: 'apprequests',
 						title : 'wooishui',
-						message: "Lets use wooishui to maintain your debts!"
+						message: "Lets use wooishui to maintain your debts!",
+						filters: ['app_non_users']
 					}, function(response){
 						
 					});
