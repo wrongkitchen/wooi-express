@@ -293,11 +293,11 @@ define(function(){
 		getUserNameByUID: function(pUID){
 			var _this = this;
 			var record = _.filter(_this.credits.toJSON(), function(data){
-				return (data.creatorUID == pUID || data.debtorsUID == pUID);
+				return (data.creditorUID == pUID || data.debtorsUID == pUID);
 			});
 			if(record.length){
 				var _r = record[0];
-				return (_r.creatorUID == pUID) ? _r.creatorName : _r.debtorsName;
+				return (_r.creditorUID == pUID) ? _r.creditorName : _r.debtorsName;
 			} else {
 				return false;
 			}
