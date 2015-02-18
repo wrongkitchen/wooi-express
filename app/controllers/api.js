@@ -10,6 +10,31 @@ module.exports = function (app) {
 };
 
 
+router.post('/debtsAccept', function (req, res, next) {
+	var itemID = req.body.itemid;
+	var curUser = req.user;
+	if(curUser){
+		if(itemID){
+			Debt.where('_id', itemID)
+			.or([{ creditorUID : curUser.uid }, { debtorsUID : curUser.uid }])
+			.findOne(function(err, data){
+				if(err){
+					res.status(500).json({ error: err });
+				} else if(data){
+					data.reject = "";
+					data.save(function(err, data){
+						if(err)
+							res.status(500).json({ error: err });
+						else
+							res.json({ status: true, message: "success" });
+					});
+				} else {
+					res.status(500).json({ error: 'no such data' });
+				}
+			})
+		}
+	}
+});
 router.post('/debtsReject', function (req, res, next) {
 	var itemID = req.body.itemid;
 	var reason = req.body.reason;
@@ -72,7 +97,9 @@ router.post('/debtsSubmit', function (req, res, next) {
 		price = parseFloat(_q.price) || 0,
 		desc = _q.desc,
 		otherUserID = _q.otherUserID,
-		otherUserName = _q.otherUserName;
+		otherUserName = _q.otherUserName
+		itemid = _q.itemid;
+
 	var curUser = req.user;
 
 	var insertData = function(){
@@ -99,7 +126,35 @@ router.post('/debtsSubmit', function (req, res, next) {
 	};
 
 	if(curUser){
-		if(otherUserID){
+		if(itemid){
+			Debt.where('_id', itemid)
+				.or([{ creditorUID : curUser.uid }, { debtorsUID : curUser.uid }])
+				.findOne()
+			.exec(function(err, data){
+				if(err){
+					res.status(500).json({ error: err });
+				} else {
+					if(data){
+						data.creditorUID = (isCreatorDebt) ? otherUserID : curUser.uid;
+						data.creditorName = (isCreatorDebt) ? otherUserName : curUser.name;
+						data.debtorsUID = (isCreatorDebt) ? curUser.uid : otherUserID;
+						data.debtorsName = (isCreatorDebt) ? curUser.name : otherUserName;
+						data.price = price;
+						data.desc = desc;
+						data.reject = "";
+						data.save(function(err, data){
+							if(err)
+								res.status(500).json({ status: false, error:err });
+							else
+								res.json({ status: true });
+								
+						});
+					} else {
+						res.json({ status: false, error: 'no such data' });
+					}
+				}
+			});
+		} else if(otherUserID){
 			User
 			.where({ 'uid' : otherUserID })
 			.findOne()

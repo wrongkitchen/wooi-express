@@ -75,13 +75,25 @@ p.or{ text-align: center; }
 	&.color-green{ color:#4cd964; }
 }
 .item-media{ width:50px; height:50px; }
-#dataListDetailWrap{ display:none; }
+#dataList .item-content{
+	.item-label{
+		position:relative;
+		&:before{ 
+			content:"x"; font-family: wooishui; position: absolute; left:-25px; color:orange; 
+			opacity: 0;
+		}
+	}
+	&.rejected{ 
+		.item-label{ &:before{ opacity: 1; } }
+	}
+}
+#dataListDetailWrap, #rejectListDetailWrap{ display:none; }
 #dataListError, #dataListDetailError{ 
 	text-align: center; display:none;
 	.icon-page-search{ font-size:3em; }
 	.txt{ font-size:1.5em; margin-top: 30px; }
 }
-#dataListDetail .swipeout{
+#dataListDetail .swipeout, #rejectListDetail .swipeout{
 	.item-title-row{
 		background:none; padding-right:15px;
 		&:after{ content: "a"; font-family: wooishui; position: absolute; right: 10px; color: #000; top: 10px; }

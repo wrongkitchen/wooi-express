@@ -35,6 +35,12 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 
 		_sgd.debtsCredits = new dc();
 
+		_sgd.resetForm = function(){
+			$('#otherUserID').val('');
+			$('#otherUserName').val('');
+			$('#debtForm')[0].reset();
+		};
+
 		_sgd.changeSection = function(pPath, pParam, pSkipHash){
 			if(pPath == 'form-second'){
 				if($('#otherUserID').val() === "" && $('#otherUserName').val() === ''){
@@ -42,9 +48,7 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 					return false;
 				}
 			} else if(pPath == 'home'){
-				$('#otherUserID').val('');
-				$('#otherUserName').val('');
-				$('#debtForm')[0].reset();
+				_sgd.resetForm();
 				_sgd.debtsCredits.credits.fetch();
 			}
 			var path = pPath;
@@ -121,8 +125,9 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 				price: parseFloat($("#debtForm input[name=price]").val()) || 0,
 				desc: $("#debtForm input[name=desc]").val(),
 				otherUserID: $("#otherUserID").val(),
-				otherUserName: $("#otherUserName").val()
-			}
+				otherUserName: $("#otherUserName").val(),
+				itemid: $("#debtForm input[name=itemid]").val()
+			};
 			if(_q.price != ''){
 				$.ajax({
 					url: '/api/debtsSubmit',
@@ -130,7 +135,13 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 					data: _q,
 					success: function (data) {
 						if(data.status){
-							_sgd.changeSection('home');
+							if($("#debtForm input[name=callback]").val() != ""){
+								_sgd.debtsCredits.credits.fetch();
+								Backbone.history.loadUrl(Backbone.history.fragment);
+								_sgd.resetForm();
+							} else {
+								_sgd.changeSection('home');
+							}
 						}
 					}
 				});
