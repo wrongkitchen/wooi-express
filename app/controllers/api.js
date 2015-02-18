@@ -10,6 +10,41 @@ module.exports = function (app) {
 };
 
 
+router.post('/connectUser', function (req, res, next) {
+	var _q = req.body;
+	var curUser = req.user;
+	if(curUser){
+		if(_q.from && _q.to){
+			User.findOne({ uid:_q.to }).exec(function(err, data){
+				if(err){
+					res.json({ status: false, error: err });
+				} else if(data){
+					var userData = data;
+					Debt.update({ creditorUID: _q.from, debtorsUID : curUser.uid }, 
+								{ creditorUID: _q.to, creditorName: userData.name }, 
+					function(err, data){
+						if(err){
+							res.status(500).json({ error: err });
+						} else {
+							Debt.update({ debtorsUID: _q.from, creditorUID : curUser.uid }, 
+								{ debtorsUID: _q.to, debtorsName: userData.name }, 
+							function(err, data){
+								if(err)
+									res.status(500).json({ error: err });
+								else
+									res.json({ status: true, message: "success" });
+							});
+						}
+					});
+				} else if(!data) {
+					res.json({ status: false, error: "No such user" });
+				}
+			});
+		}
+	} else {
+		res.status(500).json({ error: 'Please login to our system' });
+	}
+});
 router.post('/debtsAccept', function (req, res, next) {
 	var itemID = req.body.itemid;
 	var curUser = req.user;
@@ -33,6 +68,8 @@ router.post('/debtsAccept', function (req, res, next) {
 				}
 			})
 		}
+	} else {
+		res.status(500).json({ error: 'Please login to our system' });
 	}
 });
 router.post('/debtsReject', function (req, res, next) {
@@ -59,6 +96,8 @@ router.post('/debtsReject', function (req, res, next) {
 				}
 			})
 		}
+	} else {
+		res.status(500).json({ error: 'Please login to our system' });
 	}
 });
 router.post('/debtsRemove', function (req, res, next) {
@@ -147,7 +186,6 @@ router.post('/debtsSubmit', function (req, res, next) {
 								res.status(500).json({ status: false, error:err });
 							else
 								res.json({ status: true });
-								
 						});
 					} else {
 						res.json({ status: false, error: 'no such data' });

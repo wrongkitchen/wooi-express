@@ -18,6 +18,7 @@ block content
 						ul#dataList
 
 		div.page.cached(data-page="detail", data-nav="back")
+			div#connectUser Connect wooishui user
 			div.page-content.infinite-scroll 
 				div.content-block-title#dataListDetailError 
 					span.icon-page-search
@@ -50,7 +51,7 @@ block content
 				div.content-block
 					div.row
 						div.col-100
-							a.button.button-fill.button-big(onclick="sgd.framework7.popup('#friendList')") Select other wooishui user
+							a.button.button-fill.button-big(onclick="sgd.popupFriendList.loadFormPicker()") Select other wooishui user
 							
 		div.page.cached#formSecond(data-page="form-second", data-nav="cancel")
 			div.page-content.infinite-scroll 

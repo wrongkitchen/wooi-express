@@ -242,4 +242,17 @@ p.or {
     color: #000;
     top: 10px; }
 
+#connectUser {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  z-index: 10; }
+  #connectUser:before {
+    content: "b";
+    font-family: wooishui;
+    position: relative;
+    top: 4px;
+    font-size: 1.6em;
+    right: 5px; }
+
 /*# sourceMappingURL=style.css.map */

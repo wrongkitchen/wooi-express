@@ -72,6 +72,11 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 			};
 			if(page.name == "detail"){
 				if(page.query.uid){
+					if(page.query.uid.indexOf("-") > -1){
+						$("#connectUser").show().data("uid", page.query.uid);
+					} else{
+						$("#connectUser").hide().data("uid", "");
+					}
 					_sgd.debtsCredits.loadDetailByUID(page.query.uid);
 				} else {
 					window.location.hash = "";
@@ -94,6 +99,12 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 					_sgd.framework7.alert('Please enter a name / select a wooishui user', function(){
 						_sgd.changeSection('form');
 					});
+				}
+			} else if(page.name == "detail"){
+				if(page.query.uid.indexOf("-") > -1){
+					$("#connectUser").show().data("uid", page.query.uid);
+				} else{
+					$("#connectUser").hide().data("uid", "");
 				}
 			}
 		});
@@ -173,7 +184,24 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 			}
 		];
 		_sgd.framework7.actions(buttons);
-	});   
+	});
+	$("#connectUser").on('click', function(){
+		var fromUID = $(this).data('uid')
+		_sgd.popupFriendList.loadUserPicker(function(pToUID){
+			if(fromUID && pToUID){
+				$.ajax({
+					url: '/api/connectUser',
+					type: 'post',
+					data: { from: fromUID, to:pToUID },
+					success: function (data) {
+						if(data.status){
+							_sgd.changeSection('home');
+						}
+					}
+				});
+			}
+		});
+	});
 	$(".debtType .left").on('click', function(){
 		$(".debtType .middle").addClass('creatorDebt');
 	});

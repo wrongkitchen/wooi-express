@@ -7,6 +7,8 @@ define([], function(){
 		regFds: null,
 		regView: null,
 
+		userOnClick: function(){},
+
 		initialize: function(){
 			var _this = this;
 
@@ -19,9 +21,7 @@ define([], function(){
 				recordUserID: function(e){
 					var userID = $(e.currentTarget).data('userid');
 					if(userID)
-						$("#otherUserID").val(userID);
-					sgd.framework7.closeModal();
-					sgd.changeSection('form-second', [], true);
+						_this.userOnClick(userID);
 				},
 				initialize: function(options){
 					var _view = this;
@@ -42,6 +42,25 @@ define([], function(){
 			_this.regView = new _regView({ collection: _this.regFds });
 		},
 
+		loadFormPicker: function(){
+			var _this = this;
+			_this.userOnClick = function(userID){
+				$("#otherUserID").val(userID);
+				sgd.framework7.closeModal();
+				sgd.changeSection('form-second', [], true);
+			};
+			sgd.framework7.popup('#friendList');
+		},
+
+		loadUserPicker: function(pCallback){
+			var _this = this;
+			_this.userOnClick = function(userID){
+				sgd.framework7.closeModal();
+				if(pCallback) pCallback(userID);
+			};
+			sgd.framework7.popup('#friendList');
+		},
+
 		startLoading: function(){
 			var _this = this;
 			
@@ -56,17 +75,6 @@ define([], function(){
 					_this.regView.$el.hide();
 				}
 			});
-			
-			// if(!_this.invitableFds){
-			// 	_this.get("getInvitableHandler")(function(pRes){
-			// 		if(pRes.data.length){
-			// 			_this.invitableFds = new Backbone.Collection(pRes.data);
-			// 			_this.fetchData($(_this.get("inviteTarget")), _this.invitableFds);
-			// 			$(_this.get("inviteTarget")).show();
-			// 		}
-			// 		$(_this.get("wrapper")).removeClass("preloading");
-			// 	});
-			// }
 		},
 
 		fetchData: function(pTarget, pColl){

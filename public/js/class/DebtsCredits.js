@@ -81,7 +81,7 @@ define(function(){
 						$('#dataListWrap').show()
 					} else {
 						$('#dataListError').show();
-						$('#dataListWrap').hide()
+						$('#dataListWrap').hide();
 					}
 				},
 				showDetail: function(e){
@@ -104,18 +104,22 @@ define(function(){
 				render: function(){
 					var _view = this;
 					_view.$el.empty();
-					_view.options.credits.each(function(credit){
-						var obj = credit.toJSON();
+					if(_view.options.credits.length){
 						$(_view.wrapper).show();
-						if(obj.creditorUID == _this.userUID){
-							obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.creditorName : obj.debtorsName;
-						} else {
-							obj.price *= -1;
-							obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.debtorsName : obj.creditorName;
-						}
-						obj.settlable = (obj.creatorUID == _this.userUID) ? true : false;
-						_view.$el.append(_view.detailTemplate(obj));
-					});
+						_view.options.credits.each(function(credit){
+							var obj = credit.toJSON();
+							if(obj.creditorUID == _this.userUID){
+								obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.creditorName : obj.debtorsName;
+							} else {
+								obj.price *= -1;
+								obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.debtorsName : obj.creditorName;
+							}
+							obj.settlable = (obj.creatorUID == _this.userUID) ? true : false;
+							_view.$el.append(_view.detailTemplate(obj));
+						});
+					} else {
+						$(_view.wrapper).hide();
+					}
 				},
 				settleItem: function(e){
 					var itemID = $(e.currentTarget).data('itemid');
@@ -209,18 +213,22 @@ define(function(){
 				render: function(){
 					var _view = this;
 					_view.$el.empty();
-					_view.options.credits.each(function(credit){
-						$(_view.wrapper).show();
-						var obj = credit.toJSON();
-						if(obj.creditorUID == _this.userUID){
-							obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.creditorName : obj.debtorsName;
-						} else {
-							obj.price *= -1;
-							obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.debtorsName : obj.creditorName;
-						}
-						obj.creator = (obj.creatorUID == _this.userUID) ? true : false;
-						_view.$el.append(_view.detailTemplate(obj));
-					});
+					if(_view.options.credits.length){
+						_view.options.credits.each(function(credit){
+							$(_view.wrapper).show();
+							var obj = credit.toJSON();
+							if(obj.creditorUID == _this.userUID){
+								obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.creditorName : obj.debtorsName;
+							} else {
+								obj.price *= -1;
+								obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.debtorsName : obj.creditorName;
+							}
+							obj.creator = (obj.creatorUID == _this.userUID) ? true : false;
+							_view.$el.append(_view.detailTemplate(obj));
+						});
+					} else {
+						$(_view.wrapper).hide();
+					}
 				}
 			});
 
