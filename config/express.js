@@ -39,7 +39,7 @@ module.exports = function(app, config) {
 	app.use(methodOverride());
 	app.use(function (req, res, next) {
 		res.locals = {
-			redirectURL: redirectURL: process.env.REDIRECT_URL || 'http://www.wooishui.com',
+			redirectURL: process.env.REDIRECT_URL || 'http://www.wooishui.com',
 			ga: process.env.GA || 'UA-37456538-10',
 			fbAppID: config.FACEBOOK_APP_ID,
 			user: req.user || {},
