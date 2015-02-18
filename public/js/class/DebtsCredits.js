@@ -266,7 +266,6 @@ define(function(){
 				$(_this.creditDetailView.wrapper).hide();
 				$(_this.rejectedView.wrapper).hide();
 				$('#dataListDetailError').show();
-				$('#connectUser').hide();
 			} else {
 				var rejected = [];
 				var normal = [];
@@ -288,6 +287,19 @@ define(function(){
 				} else {
 					$(_this.rejectedView.wrapper).hide();
 				}
+			}
+		},
+
+		getUserNameByUID: function(pUID){
+			var _this = this;
+			var record = _.filter(_this.credits.toJSON(), function(data){
+				return (data.creatorUID == pUID || data.debtorsUID == pUID);
+			});
+			if(record.length){
+				var _r = record[0];
+				return (_r.creatorUID == pUID) ? _r.creatorName : _r.debtorsName;
+			} else {
+				return false;
 			}
 		},
 

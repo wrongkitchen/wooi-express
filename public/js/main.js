@@ -42,6 +42,7 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 		};
 
 		_sgd.changeSection = function(pPath, pParam, pSkipHash){
+			ga('send', 'pageview', '/'+pPath);
 			if(pPath == 'form-second'){
 				if($('#otherUserID').val() === "" && $('#otherUserName').val() === ''){
 					_sgd.framework7.alert('Please enter a name / select a wooishui user', ['Name missing']);
@@ -72,11 +73,7 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 			};
 			if(page.name == "detail"){
 				if(page.query.uid){
-					if(page.query.uid.indexOf("-") > -1){
-						$("#connectUser").show().data("uid", page.query.uid);
-					} else{
-						$("#connectUser").hide().data("uid", "");
-					}
+					$("#detailMoreBtn").data("uid", page.query.uid);
 					_sgd.debtsCredits.loadDetailByUID(page.query.uid);
 				} else {
 					window.location.hash = "";
@@ -91,7 +88,7 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 			else
 				$("#header").removeClass();
 			if(page.name == "form-second"){
-				if($("#otherUserID").val()){
+				if($("#otherUserID").val().indexOf('-') < 0){
 					$(".debtType .right").html("<img src=\"http://graph.facebook.com/" + $("#otherUserID").val() + "/picture\" alt=\"\" />");
 				} else if($("#otherUserName").val()){
 					$(".debtType .right").html('<span>' + $("#otherUserName").val() + '</span>');
@@ -99,12 +96,6 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 					_sgd.framework7.alert('Please enter a name / select a wooishui user', function(){
 						_sgd.changeSection('form');
 					});
-				}
-			} else if(page.name == "detail"){
-				if(page.query.uid.indexOf("-") > -1){
-					$("#connectUser").show().data("uid", page.query.uid);
-				} else{
-					$("#connectUser").hide().data("uid", "");
 				}
 			}
 		});
@@ -185,8 +176,20 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 		];
 		_sgd.framework7.actions(buttons);
 	});
-	$("#connectUser").on('click', function(){
-		var fromUID = $(this).data('uid')
+	$('#detailMoreBtn').on('click', function () {
+		var _uid = $(this).data('uid');
+		var _wooishuiUser = !(_uid.indexOf("-") >= 0);
+		var popoverHTML = _.template($("#detailPopoverLinks").html());
+		_sgd.framework7.popover(popoverHTML({ isWooishuiUser: _wooishuiUser, uid: _uid }), this);
+	});
+	_sgd.addDebtByID = function(fromUID){
+		$("#otherUserID").val(fromUID);
+		$("#otherUserName").val(this.debtsCredits.getUserNameByUID(fromUID));
+		_sgd.framework7.closeModal('.popover.detailLinks');
+		this.changeSection('form-second', [], true)
+	};
+	_sgd.connectUser = function(fromUID){
+		_sgd.framework7.closeModal('.popover.detailLinks');
 		_sgd.popupFriendList.loadUserPicker(function(pToUID){
 			if(fromUID && pToUID){
 				$.ajax({
@@ -201,7 +204,7 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 				});
 			}
 		});
-	});
+	}
 	$(".debtType .left").on('click', function(){
 		$(".debtType .middle").addClass('creatorDebt');
 	});

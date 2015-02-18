@@ -99,7 +99,9 @@ p.or{ text-align: center; }
 		&:after{ content: "a"; font-family: wooishui; position: absolute; right: 10px; color: #000; top: 10px; }
 	}
 }
-#connectUser{
+#detailMoreBtn{
 	position: absolute; top: 20px; right: 10px; z-index:10;
-	&:before{ content: "b"; font-family: wooishui; position: relative; top: 4px; font-size: 1.6em; right: 5px; }
+	&:before{ content: "c"; font-family: wooishui; position: relative; top: 10px; font-size: 1.2em; right: 5px; }
 }
+.detailInner{ position:relative; }
+.popover-inner a.item-link.list-button{ border:none; }

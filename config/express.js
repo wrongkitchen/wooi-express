@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compress = require('compression');
 var methodOverride = require('method-override');
+var MongoStore = require('connect-mongo')(session);
 var passport = require('passport'),
 	FacebookStrategy = require('passport-facebook').Strategy;
 var mongoose = require('mongoose');
@@ -26,10 +27,11 @@ module.exports = function(app, config) {
 	app.use(cookieParser());
 	app.use(compress());
 	app.use(session({ 
+		store: new MongoStore({ mongooseConnection: mongoose.connection }),
 		secret: 'p)wt{vshTcd`ft"+hw:}-&IC`Ou0~ap,|PJ/!qLm3"tiB1E{V#BF6T[Z0bvb;QE4',
 		cookie: { maxAge: 2628000000 },
-		saveUninitialized: true,
-         resave: true
+		saveUninitialized: false,
+		resave: false
 	}));
 	app.use(passport.initialize());
 	app.use(passport.session());

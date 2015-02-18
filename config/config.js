@@ -10,6 +10,7 @@ var config = {
 		app: {
 			name: 'wooishui-express'
 		},
+		ga: "",
 		port: 5000,
 		db: 'mongodb://localhost/wooishui-express-development',
 		FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID || '1504759193104269',
@@ -22,6 +23,7 @@ var config = {
 		app: {
 			name: 'wooishui-express'
 		},
+		ga: "",
 		port: 5000,
 		db: 'mongodb://localhost/wooishui-express-test',
 		FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID || '1504759193104269',
@@ -34,6 +36,7 @@ var config = {
 		app: {
 			name: 'wooishui'
 		},
+		ga: process.env.GA || 'UA-37456538-10',
 		port: process.env.PORT,
 		db: process.env.MONGOLAB_URI,
 		FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,

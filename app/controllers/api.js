@@ -22,12 +22,14 @@ router.post('/connectUser', function (req, res, next) {
 					var userData = data;
 					Debt.update({ creditorUID: _q.from, debtorsUID : curUser.uid }, 
 								{ creditorUID: _q.to, creditorName: userData.name }, 
+								{ multi: true }, 
 					function(err, data){
 						if(err){
 							res.status(500).json({ error: err });
 						} else {
 							Debt.update({ debtorsUID: _q.from, creditorUID : curUser.uid }, 
 								{ debtorsUID: _q.to, debtorsName: userData.name }, 
+								{ multi: true },
 							function(err, data){
 								if(err)
 									res.status(500).json({ error: err });
@@ -204,7 +206,7 @@ router.post('/debtsSubmit', function (req, res, next) {
 						otherUserName = user.name;
 						insertData();
 					} else {
-						res.json({ status: true });
+						insertData();
 					}
 				}
 			});
