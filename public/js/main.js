@@ -88,8 +88,11 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 			else
 				$("#header").removeClass();
 			if(page.name == "form-second"){
-				if($("#otherUserID").val().indexOf('-') < 0){
-					$(".debtType .right").html("<img src=\"http://graph.facebook.com/" + $("#otherUserID").val() + "/picture\" alt=\"\" />");
+				if($("#otherUserID").val()){
+					if($("#otherUserID").val().indexOf('-') < 0)
+						$(".debtType .right").html("<img src=\"http://graph.facebook.com/" + $("#otherUserID").val() + "/picture\" alt=\"\" />");
+					else
+						$(".debtType .right").html('<span>' + $("#otherUserName").val() + '</span>');
 				} else if($("#otherUserName").val()){
 					$(".debtType .right").html('<span>' + $("#otherUserName").val() + '</span>');
 				} else {
