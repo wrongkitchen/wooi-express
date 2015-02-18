@@ -106,6 +106,7 @@ define(function(){
 					_view.$el.empty();
 					_view.options.credits.each(function(credit){
 						var obj = credit.toJSON();
+						$(_view.wrapper).show();
 						if(obj.creditorUID == _this.userUID){
 							obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.creditorName : obj.debtorsName;
 						} else {
@@ -209,6 +210,7 @@ define(function(){
 					var _view = this;
 					_view.$el.empty();
 					_view.options.credits.each(function(credit){
+						$(_view.wrapper).show();
 						var obj = credit.toJSON();
 						if(obj.creditorUID == _this.userUID){
 							obj.creatorName = (obj.creatorUID == _this.userUID) ? obj.creditorName : obj.debtorsName;
