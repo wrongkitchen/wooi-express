@@ -266,6 +266,7 @@ define(function(){
 				$(_this.creditDetailView.wrapper).hide();
 				$(_this.rejectedView.wrapper).hide();
 				$('#dataListDetailError').show();
+				$('#connectUser').hide();
 			} else {
 				var rejected = [];
 				var normal = [];
