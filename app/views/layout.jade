@@ -3,32 +3,8 @@ html
 
 	//- HTML HEADER
 	head
-		meta(charset="utf-8")
-		meta(http-equiv="X-UA-Compatible" content="IE=edge")
-		meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui")
-		meta(name="apple-mobile-web-app-capable", content="yes")
-		meta(property="og:title", content="wooishui - debt collector" )
-		meta(property="og:type", content="website" )
-		meta(property="og:image", content="/img/apple-touch-ipad-retina.png" )
-		meta(property="og:url", content="#{rootURL}" )
-		meta(property="og:description", content="wooishui - debt collector" )
-		
-		title= title || 'wooishui'
-		link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
 
-		link(href="https://fontastic.s3.amazonaws.com/CWNp47vRfsX6Apg6FPgnZg/icons.css", rel="stylesheet")
-		link(href="http://fonts.googleapis.com/css?family=Quicksand:400,700", rel="stylesheet")
-		link(href="http://fonts.googleapis.com/css?family=Lobster", rel="stylesheet")
-		link(href="/components/framework7/dist/css/framework7.min.css", rel="stylesheet")
-		link(rel="manifest" href="manifest.json")
-
-		link(rel="apple-touch-icon",href="/img/apple-touch-iphone.png")
-		link(rel="apple-touch-icon",sizes="72x72",href="/img/apple-touch-ipad.png")
-		link(rel="apple-touch-icon",sizes="120x120",href="/img/apple-touch-iphone4.png")
-		link(rel="apple-touch-icon",sizes="144x144",href="/img/apple-touch-ipad-retina.png")
-		link(rel="apple-touch-startup-image",href="/img/startup.png")
-
-		link(href="/css/style.css", rel="stylesheet")
+		include meta.jade
 
 		//- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
 		//- Safely remove this block if you are not targeting IE8
