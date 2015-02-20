@@ -67,35 +67,53 @@ a {
     margin: 0 20px;
     border-top: 1px solid #ccc; }
 
-.debtType .left {
-  text-align: right; }
-  .debtType .left img {
+.debtType {
+  position: relative; }
+  .debtType .left {
+    text-align: right; }
+    .debtType .left img {
+      height: 50px; }
+  .debtType .middle {
+    text-align: center;
+    font-size: 2em;
+    line-height: 2em; }
+    .debtType .middle .icon-caret-right {
+      color: #216C2A;
+      opacity: 1; }
+    .debtType .middle .icon-caret-left {
+      color: #bbbbbb;
+      opacity: .8; }
+    .debtType .middle .icon-banknote {
+      color: #216C2A; }
+    .debtType .middle .get, .debtType .middle .give {
+      font-size: 12px;
+      line-height: 12px;
+      top: -10px;
+      position: absolute;
+      left: 0;
+      text-align: center;
+      width: 100%; }
+    .debtType .middle .get {
+      display: none; }
+    .debtType .middle .give {
+      display: block; }
+    .debtType .middle.creatorDebt .icon-caret-right {
+      color: #bbbbbb;
+      opacity: .8; }
+    .debtType .middle.creatorDebt .icon-caret-left {
+      color: #216C2A;
+      opacity: 1; }
+    .debtType .middle.creatorDebt .give {
+      display: none; }
+    .debtType .middle.creatorDebt .get {
+      display: block; }
+  .debtType .right {
+    display: table;
     height: 50px; }
-.debtType .middle {
-  text-align: center;
-  font-size: 2em;
-  line-height: 2em; }
-  .debtType .middle .icon-caret-right {
-    color: #216C2A;
-    opacity: 1; }
-  .debtType .middle .icon-caret-left {
-    color: #bbbbbb;
-    opacity: .8; }
-  .debtType .middle .icon-banknote {
-    color: #216C2A; }
-  .debtType .middle.creatorDebt .icon-caret-right {
-    color: #bbbbbb;
-    opacity: .8; }
-  .debtType .middle.creatorDebt .icon-caret-left {
-    color: #216C2A;
-    opacity: 1; }
-.debtType .right {
-  display: table;
-  height: 50px; }
-  .debtType .right span {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: left; }
+    .debtType .right span {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: left; }
 
 .facebookLogin {
   background-image: url(../img/facebook-login.png);
