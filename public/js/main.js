@@ -176,7 +176,9 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 			{
 				text: 'Sign Out',
 				onClick: function () {
-					window.location.href = "/logout";
+					FB.logout(function(res){
+						window.location.href = "/logout";
+					});
 				}
 			}
 		];

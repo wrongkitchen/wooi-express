@@ -89,7 +89,10 @@ module.exports = function(app, config) {
 		successRedirect: '/',
 		failureRedirect: '/login' 
 	}));
-	app.all('/logout', function(req, res){ req.logout(); res.redirect('/'); });
+	app.all('/logout', function(req, res){ 
+		req.logout(); 
+		res.redirect('/'); 
+	});
 
 	app.use(function (req, res, next) {
 		var err = new Error('Not Found');

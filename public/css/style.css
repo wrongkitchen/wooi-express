@@ -22,7 +22,7 @@ a {
   text-decoration: none;
   color: green;
   border-bottom: 1px dashed green; }
-  a.headerBtn {
+  a.headerBtn, a.swipeout-delete, a.rejectBtn, a.rebornBtn {
     border: none; }
 
 .container {
@@ -260,3 +260,6 @@ p.or {
 
 .popover-inner a.item-link.list-button {
   border: none; }
+
+#submitDebtBtn.disabled {
+  opacity: .5; }
