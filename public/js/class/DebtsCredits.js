@@ -46,6 +46,7 @@ define(function(){
 					var _view = this;
 					var _credits = _view.options.credits;
 					var allData = new Backbone.Collection();
+						allData.comparator = 'price';
 					_view.$el.empty();
 					if(_credits.length){
 						_credits.each(function(credit){
@@ -73,9 +74,14 @@ define(function(){
 								checkDataModel({ id: obj.creditorUID }, 'creditorUID');
 							}
 						});
+
 						allData.each(function(pModel){
 							var obj = pModel.toJSON();
-							_view.$el.append(_view.mainListTemplate(obj));
+							if(obj.price === 0){
+								_view.$el.append(_view.mainListTemplate(obj));
+							} else {
+								_view.$el.prepend(_view.mainListTemplate(obj));
+							}
 						});
 						$('#dataListError').hide();
 						$('#dataListWrap').show()

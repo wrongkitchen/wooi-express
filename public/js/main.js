@@ -39,6 +39,7 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 			$('#otherUserID').val('');
 			$('#otherUserName').val('');
 			$('#debtForm')[0].reset();
+			$("#submitDebtBtn").removeClass('disabled');
 		};
 
 		_sgd.changeSection = function(pPath, pParam, pSkipHash){
@@ -125,6 +126,7 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 			_sgd.debtsCredits.credits.fetch();
 		});
 		_sgd.submitDebt = function(){
+			$("#submitDebtBtn").addClass('disabled');
 			var _q = {
 				isCreatorDebt: $(".debtType .middle").hasClass('creatorDebt'),
 				price: parseFloat($("#debtForm input[name=price]").val()) || 0,
@@ -152,6 +154,7 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 				});
 			} else {
 				sgd.framework7.alert('Please fill in an amount', ['Amount missing']);
+				$("#submitDebtBtn").removeClass('disabled');
 			}
 		};
 		
@@ -227,6 +230,11 @@ require(["FacebookHelper", "PopupFriendList", "DebtsCredits"], function(fbh, pfl
 	});
 	$('#inviteFriend').on('opened', function () {
 		_sgd.popupFriendList.startLoading();
+	});
+	$('#submitDebtBtn').on('click', function () {
+		if($(this).hasClass('disabled'))
+			return false;
+		_sgd.submitDebt();
 	});
 	$('#friendList').on('opened', function () {
 		_sgd.popupFriendList.startLoading();
