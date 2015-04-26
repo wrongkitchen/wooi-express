@@ -9,225 +9,253 @@ module.exports = function (app) {
 	app.use('/api', router);
 };
 
-
-router.post('/connectUser', function (req, res, next) {
-	var _q = req.body;
-	var curUser = req.user;
-	if(curUser){
-		if(_q.from && _q.to){
-			User.findOne({ uid:_q.to }).exec(function(err, data){
-				if(err){
-					res.json({ status: false, error: err });
-				} else if(data){
-					var userData = data;
-					Debt.update({ creditorUID: _q.from, debtorsUID : curUser.uid }, 
-								{ creditorUID: _q.to, creditorName: userData.name }, 
-					function(err, data){
-						if(err){
-							res.status(500).json({ error: err });
-						} else {
-							Debt.update({ debtorsUID: _q.from, creditorUID : curUser.uid }, 
-								{ debtorsUID: _q.to, debtorsName: userData.name }, 
-							function(err, data){
-								if(err)
-									res.status(500).json({ error: err });
-								else
-									res.json({ status: true, message: "success" });
-							});
-						}
-					});
-				} else if(!data) {
-					res.json({ status: false, error: "No such user" });
-				}
-			});
-		}
-	} else {
-		res.status(500).json({ error: 'Please login to our system' });
-	}
-});
-router.post('/debtsAccept', function (req, res, next) {
-	var itemID = req.body.itemid;
-	var curUser = req.user;
-	if(curUser){
-		if(itemID){
-			Debt.where('_id', itemID)
-			.or([{ creditorUID : curUser.uid }, { debtorsUID : curUser.uid }])
-			.findOne(function(err, data){
-				if(err){
-					res.status(500).json({ error: err });
-				} else if(data){
-					data.reject = "";
-					data.save(function(err, data){
-						if(err)
-							res.status(500).json({ error: err });
-						else
-							res.json({ status: true, message: "success" });
-					});
-				} else {
-					res.status(500).json({ error: 'no such data' });
-				}
-			})
-		}
-	} else {
-		res.status(500).json({ error: 'Please login to our system' });
-	}
-});
-router.post('/debtsReject', function (req, res, next) {
-	var itemID = req.body.itemid;
-	var reason = req.body.reason;
-	var curUser = req.user;
-	if(curUser){
-		if(itemID){
-			Debt.where('_id', itemID)
-			.or([{ creditorUID : curUser.uid }, { debtorsUID : curUser.uid }])
-			.findOne(function(err, data){
-				if(err){
-					res.status(500).json({ error: err });
-				} else if(data){
-					data.reject = reason;
-					data.save(function(err, data){
-						if(err)
-							res.status(500).json({ error: err });
-						else
-							res.json({ status: true, message: "success" });
-					});
-				} else {
-					res.status(500).json({ error: 'no such data' });
-				}
-			})
-		}
-	} else {
-		res.status(500).json({ error: 'Please login to our system' });
-	}
-});
-router.post('/debtsRemove', function (req, res, next) {
-	var itemID = req.body.itemid;
-	var curUser = req.user;
-	if(curUser){
-		if(itemID){
-			Debt.where('_id', itemID)
-			.where('hidden', false)
-			.where('creatorUID', curUser.uid)
-			.findOne()
-			.exec(function(err, data){
-				if(err){
-					res.status(500).json({ error: err });
-				} else {
-					if(data){
-						data.hidden = true;
-						data.save();
-						res.json({ status: true });
-					} else {
-						res.json({ status: false, error: 'no such data' });
-					}
-				}
-			});
-		} else {
-			res.status(500).json({ error: 'api error' });
-		}
-	} else {
-		res.status(500).json({ error: 'Please login to our system' });
-	}
-});
-
-router.post('/debtsSubmit', function (req, res, next) {
-	var _q = req.body;
+router.get('/debtsSubmit', function (req, res, next) {
+	var _q = req.query;
 	var isCreatorDebt  = (_q.isCreatorDebt == 'true'),
 		price = parseFloat(_q.price) || 0,
 		desc = _q.desc,
 		otherUserID = _q.otherUserID,
 		otherUserName = _q.otherUserName
-		itemid = _q.itemid;
+		// itemid = _q.itemid;
 
-	var curUser = req.user;
-
-	var insertData = function(){
+	var insertData = function(pUser){
 		if(price > 0){
 			var newDebt = new Debt({
-				creatorUID: curUser.uid,
-				creditorUID: (isCreatorDebt) ? otherUserID : curUser.uid,
-				creditorName: (isCreatorDebt) ? otherUserName : curUser.name,
-				debtorsUID: (isCreatorDebt) ? curUser.uid : otherUserID,
-				debtorsName: (isCreatorDebt) ? curUser.name : otherUserName,
+				creatorUID: pUser.uid,
+				creditorUID: (isCreatorDebt) ? otherUserID : pUser.uid,
+				creditorName: (isCreatorDebt) ? otherUserName : pUser.name,
+				debtorsUID: (isCreatorDebt) ? pUser.uid : otherUserID,
+				debtorsName: (isCreatorDebt) ? pUser.name : otherUserName,
 				price: price,
 				desc: desc
 			});
 			newDebt.save(function(err) {
 				if(err){
-					res.json({ status:false, error: err });
+					res.jsonp({ status:false, error: err });
 				} else {
-					res.json({ status: true, message: "success" });
+					res.jsonp({ status: true, message: "success" });
 				}
 			});
 		} else {
-			res.json({ status:true });
+			res.jsonp({ status:true });
 		}
 	};
 
-	if(curUser){
-		if(itemid){
-			Debt.where('_id', itemid)
-				.or([{ creditorUID : curUser.uid }, { debtorsUID : curUser.uid }])
-				.findOne()
-			.exec(function(err, data){
-				if(err){
-					res.status(500).json({ error: err });
-				} else {
-					if(data){
-						data.creditorUID = (isCreatorDebt) ? otherUserID : curUser.uid;
-						data.creditorName = (isCreatorDebt) ? otherUserName : curUser.name;
-						data.debtorsUID = (isCreatorDebt) ? curUser.uid : otherUserID;
-						data.debtorsName = (isCreatorDebt) ? curUser.name : otherUserName;
-						data.price = price;
-						data.desc = desc;
-						data.reject = "";
-						data.save(function(err, data){
-							if(err)
-								res.status(500).json({ status: false, error:err });
-							else
-								res.json({ status: true });
-						});
-					} else {
-						res.json({ status: false, error: 'no such data' });
-					}
-				}
-			});
-		} else if(otherUserID){
-			User
-			.where({ 'uid' : otherUserID })
-			.findOne()
-			.exec(function(err, user){
-				if(err){
-					res.status(500).json({ status:false, error: err });
-				} else {
-					if(user){
-						otherUserName = user.name;
-						insertData();
-					} else {
-						res.json({ status: true });
-					}
-				}
-			});
+	User.findOne({ uid:_q.curUser }).exec(function(err, data){
+		if(err){
+			res.status(500).jsonp({ error: 'Please login to our system' });
 		} else {
-			otherUserID = uuid.v1();
-			insertData();
+			if(data){
+				// if(itemid){
+				// 	Debt.where('_id', itemid)
+				// 		.or([{ creditorUID : data.uid }, { debtorsUID : data.uid }])
+				// 		.findOne()
+				// 	.exec(function(err, data){
+				// 		if(err){
+				// 			res.status(500).jsonp({ error: err });
+				// 		} else {
+				// 			if(data){
+				// 				data.creditorUID = (isCreatorDebt) ? otherUserID : data.uid;
+				// 				data.creditorName = (isCreatorDebt) ? otherUserName : data.name;
+				// 				data.debtorsUID = (isCreatorDebt) ? data.uid : otherUserID;
+				// 				data.debtorsName = (isCreatorDebt) ? data.name : otherUserName;
+				// 				data.price = price;
+				// 				data.desc = desc;
+				// 				data.reject = "";
+				// 				data.save(function(err, data){
+				// 					if(err)
+				// 						res.status(500).jsonp({ status: false, error:err });
+				// 					else
+				// 						res.jsonp({ status: true });
+				// 				});
+				// 			} else {
+				// 				res.jsonp({ status: false, error: 'no such data' });
+				// 			}
+				// 		}
+				// 	});
+				// } else 
+				if(otherUserID){
+					User
+					.where({ 'uid' : otherUserID })
+					.findOne()
+					.exec(function(err, user){
+						if(err){
+							res.status(500).jsonp({ status:false, error: err });
+						} else {
+							if(user){
+								otherUserName = user.name;
+								insertData(data);
+							} else {
+								Debt.find().or([{ creditorUID : otherUserID }, { debtorsUID : otherUserID }])
+									.findOne()
+									.exec(function(err, debt){
+										if(err){
+											res.status(500).jsonp({ status: false, error:err });
+										} else {
+											if(debt){
+												otherUserName = (debt.debtorsUID === otherUserID) ? debt.debtorsName : debt.creditorName;
+												insertData(data);
+											} else {
+												res.jsonp({ status: false, error: 'no this uid' });
+											}
+										}
+									});
+							}
+						}
+					});
+				} else {
+					otherUserID = uuid.v1();
+					insertData(data);
+				}
+			}
+		}
+	});
+
+});
+
+
+
+// Checked
+
+router.get('/connectUser', function (req, res, next) {
+	var _q = req.query;
+	var uid = _q.uid;
+	if(uid){
+		if(_q.from && _q.to){
+			User.findOne({ uid:_q.to }).exec(function(err, data){
+				if(err){
+					res.jsonp({ status: false, error: err });
+				} else if(data){
+					var userData = data;
+					Debt.update({ creditorUID: _q.from, debtorsUID : uid }, 
+								{ creditorUID: _q.to, creditorName: userData.name }, 
+					function(err, data){
+						if(err){
+							res.status(500).jsonp({ error: err });
+						} else {
+							Debt.update({ debtorsUID: _q.from, creditorUID : uid }, 
+								{ debtorsUID: _q.to, debtorsName: userData.name }, 
+							function(err, data){
+								if(err)
+									res.status(500).jsonp({ error: err });
+								else
+									res.jsonp({ status: true, message: "success" });
+							});
+						}
+					});
+				} else if(!data) {
+					res.jsonp({ status: false, error: "No such user" });
+				}
+			});
 		}
 	} else {
-		res.status(500).json({ error: 'Please login to our system' });
+		res.status(500).jsonp({ error: 'Please provide uid' });
 	}
 });
 
 
+router.get('/debtsAccept', function (req, res, next) {
+	var _q = req.query;
+	var itemID = _q.itemid;
+	var uid = _q.uid;
+	if(uid){
+		if(itemID){
+			Debt.where('_id', itemID)
+			.or([{ creditorUID : uid }, { debtorsUID : uid }])
+			.findOne(function(err, data){
+				if(err){
+					res.status(500).jsonp({ error: err });
+				} else if(data){
+					data.reject = "";
+					data.save(function(err, data){
+						if(err)
+							res.status(500).jsonp({ error: err });
+						else
+							res.jsonp({ status: true, message: "success" });
+					});
+				} else {
+					res.status(500).jsonp({ error: 'no such data' });
+				}
+			})
+		}
+	} else {
+		res.status(500).jsonp({ error: 'Please login to our system' });
+	}
+});
+
+router.get('/debtsReject', function (req, res, next) {
+	var _q = req.query;
+	var itemID = _q.itemid;
+	var reason = _q.reason;
+	var uid = _q.uid;
+	if(uid){
+		if(itemID){
+			Debt.where('_id', itemID)
+			.or([{ creditorUID : uid }, { debtorsUID : uid }])
+			.findOne(function(err, data){
+				if(err){
+					res.status(500).jsonp({ error: err });
+				} else if(data){
+					data.reject = reason;
+					data.save(function(err, data){
+						if(err)
+							res.status(500).jsonp({ error: err });
+						else
+							res.jsonp({ status: true, message: "success" });
+					});
+				} else {
+					res.status(500).jsonp({ error: 'no such data' });
+				}
+			})
+		}
+	} else {
+		res.status(500).jsonp({ error: 'Please login to our system' });
+	}
+});
+
+
+router.get('/debtsRemove', function (req, res, next) {
+	var _q = req.query;
+	var itemID = _q.itemid;
+	var uid = _q.uid;
+	if(uid){
+		if(itemID){
+			Debt.where('_id', itemID)
+			.where('hidden', false)
+			.where('creatorUID', uid)
+			.findOne()
+			.exec(function(err, data){
+				if(err){
+					res.status(500).jsonp({ error: err });
+				} else {
+					if(data){
+						data.hidden = true;
+						data.save();
+						res.jsonp({ status: true });
+					} else {
+						res.jsonp({ status: false, error: 'no such data' });
+					}
+				}
+			});
+		} else {
+			res.status(500).jsonp({ error: 'api error' });
+		}
+	} else {
+		res.status(500).jsonp({ error: 'Please login to our system' });
+	}
+});
+
 router.get('/debtsCredits', function (req, res, next) {
-	if(req.user){
-		var uid = req.user.uid;
+	var _q = req.query;
+	if(_q.uid){
+		var uid = _q.uid;
 		Debt.find().where({ hidden : false })
 		.or([{ creditorUID : uid }, { debtorsUID : uid }])
 		.exec(function(err, data){
 			if(err)
 				res.status(500).json({ error: err });
 			else
-				res.json(data);
+				res.jsonp(data);
 		});
 	} else {
 		res.status(500).json({ error: 'Please login to our system' });
