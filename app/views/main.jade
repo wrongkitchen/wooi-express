@@ -18,8 +18,8 @@ block content
 						ul#dataList
 
 		div.page.cached(data-page="detail", data-nav="back")
-			div#connectUser Connect wooishui user
-			div.page-content.infinite-scroll 
+			div.page-content.infinite-scroll.detailInner
+				div#detailMoreBtn
 				div.content-block-title#dataListDetailError 
 					span.icon-page-search
 					div.txt Cannot find any debt of this user
@@ -67,6 +67,8 @@ block content
 									div.col-33
 										span.icon-caret-left
 									div.col-33
+										div.give GIVE
+										div.get RECEIVE
 										span.icon-banknote
 									div.col-33
 										span.icon-caret-right
@@ -88,26 +90,9 @@ block content
 					div.content-block
 						div.row
 							div.col-100
-								a.button.button-fill.button-big.color-red(href="javascript:void(0)", onclick="sgd.submitDebt()") CONFIRM
+								a#submitDebtBtn.button.button-fill.button-big.color-red(href="javascript:void(0)") CONFIRM
 			
 block panel
-
-	div#inviteFriend.popup.page.navbar-fixed
-		div.navbar
-			div.navbar-inner
-				div.left
-				div.center Invite Friend
-				div.right 
-					a.headerBtn.black.icon-remove.close-popup(href="#")
-		
-		div.page-content
-			div.infinite-scroll
-				div.content-block
-					input.friendListSearch(type="text", placeholder="search", data-target="#nonRegFriend")
-				div#nonRegFriendWrapper
-					div.content-block-title FACEBOOK FRIEND LIST
-					div.list-block
-						ul#nonRegFriend
 
 	div#friendList.popup.page.navbar-fixed
 		div.navbar
@@ -167,6 +152,19 @@ block panel
 				</div>
 			<% } %>
 		</li>
+	script#detailPopoverLinks(type="text/template").
+		<div class="popover detailLinks">
+			<div class="popover-inner">
+				<div class="list-block">
+					<ul>
+						<% if(!isWooishuiUser){ %>
+							<li><a href="javascript:void(0)" onclick="sgd.connectUser('<%=uid%>')" class="item-link list-button">Connect with wooishui user</li>
+						<% } %>
+						<li><a href="javascript:void(0)" onclick="sgd.addDebtByID('<%=uid%>')" class="item-link list-button">Add Debt</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	script#rejectedTmpl(type="text/template").
 		<li class="swipeout" id="item_<%=_id%>">
 			<div class="item-link swipeout-content item-content">

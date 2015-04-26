@@ -46,6 +46,7 @@ define(function(){
 					var _view = this;
 					var _credits = _view.options.credits;
 					var allData = new Backbone.Collection();
+						allData.comparator = 'price';
 					_view.$el.empty();
 					if(_credits.length){
 						_credits.each(function(credit){
@@ -73,9 +74,14 @@ define(function(){
 								checkDataModel({ id: obj.creditorUID }, 'creditorUID');
 							}
 						});
+
 						allData.each(function(pModel){
 							var obj = pModel.toJSON();
-							_view.$el.append(_view.mainListTemplate(obj));
+							if(obj.price === 0){
+								_view.$el.append(_view.mainListTemplate(obj));
+							} else {
+								_view.$el.prepend(_view.mainListTemplate(obj));
+							}
 						});
 						$('#dataListError').hide();
 						$('#dataListWrap').show()
@@ -266,7 +272,6 @@ define(function(){
 				$(_this.creditDetailView.wrapper).hide();
 				$(_this.rejectedView.wrapper).hide();
 				$('#dataListDetailError').show();
-				$('#connectUser').hide();
 			} else {
 				var rejected = [];
 				var normal = [];
@@ -288,6 +293,19 @@ define(function(){
 				} else {
 					$(_this.rejectedView.wrapper).hide();
 				}
+			}
+		},
+
+		getUserNameByUID: function(pUID){
+			var _this = this;
+			var record = _.filter(_this.credits.toJSON(), function(data){
+				return (data.creditorUID == pUID || data.debtorsUID == pUID);
+			});
+			if(record.length){
+				var _r = record[0];
+				return (_r.creditorUID == pUID) ? _r.creditorName : _r.debtorsName;
+			} else {
+				return false;
 			}
 		},
 

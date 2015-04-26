@@ -6,7 +6,6 @@ var path = require('path'),
 var config = {
 	development: {
 		root: rootPath,
-		redirectURL: process.env.REDIRECT_URL || 'http://www.wooishui.com',
 		app: {
 			name: 'wooishui-express'
 		},
@@ -18,7 +17,6 @@ var config = {
 
 	test: {
 		root: rootPath,
-		redirectURL: process.env.REDIRECT_URL || 'http://www.wooishui.com',
 		app: {
 			name: 'wooishui-express'
 		},
@@ -30,7 +28,6 @@ var config = {
 
 	production: {
 		root: rootPath,
-		redirectURL: process.env.REDIRECT_URL || 'http://www.wooishui.com',
 		app: {
 			name: 'wooishui'
 		},

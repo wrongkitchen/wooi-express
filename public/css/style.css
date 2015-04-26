@@ -22,7 +22,7 @@ a {
   text-decoration: none;
   color: green;
   border-bottom: 1px dashed green; }
-  a.headerBtn {
+  a.headerBtn, a.swipeout-delete, a.rejectBtn, a.rebornBtn {
     border: none; }
 
 .container {
@@ -35,7 +35,7 @@ a {
 #header {
   position: relative; }
   #header .navbar {
-    background-color: #78FF8D; }
+    background-color: #78ff8d; }
   #header .left, #header .center, #header .right {
     height: 100%; }
   #header .logo {
@@ -67,35 +67,53 @@ a {
     margin: 0 20px;
     border-top: 1px solid #ccc; }
 
-.debtType .left {
-  text-align: right; }
-  .debtType .left img {
+.debtType {
+  position: relative; }
+  .debtType .left {
+    text-align: right; }
+    .debtType .left img {
+      height: 50px; }
+  .debtType .middle {
+    text-align: center;
+    font-size: 2em;
+    line-height: 2em; }
+    .debtType .middle .icon-caret-right {
+      color: #216C2A;
+      opacity: 1; }
+    .debtType .middle .icon-caret-left {
+      color: #bbbbbb;
+      opacity: .8; }
+    .debtType .middle .icon-banknote {
+      color: #216C2A; }
+    .debtType .middle .get, .debtType .middle .give {
+      font-size: 12px;
+      line-height: 12px;
+      top: -10px;
+      position: absolute;
+      left: 0;
+      text-align: center;
+      width: 100%; }
+    .debtType .middle .get {
+      display: none; }
+    .debtType .middle .give {
+      display: block; }
+    .debtType .middle.creatorDebt .icon-caret-right {
+      color: #bbbbbb;
+      opacity: .8; }
+    .debtType .middle.creatorDebt .icon-caret-left {
+      color: #216C2A;
+      opacity: 1; }
+    .debtType .middle.creatorDebt .give {
+      display: none; }
+    .debtType .middle.creatorDebt .get {
+      display: block; }
+  .debtType .right {
+    display: table;
     height: 50px; }
-.debtType .middle {
-  text-align: center;
-  font-size: 2em;
-  line-height: 2em; }
-  .debtType .middle .icon-caret-right {
-    color: #216C2A;
-    opacity: 1; }
-  .debtType .middle .icon-caret-left {
-    color: #BBBBBB;
-    opacity: .8; }
-  .debtType .middle .icon-banknote {
-    color: #216C2A; }
-  .debtType .middle.creatorDebt .icon-caret-right {
-    color: #BBBBBB;
-    opacity: .8; }
-  .debtType .middle.creatorDebt .icon-caret-left {
-    color: #216C2A;
-    opacity: 1; }
-.debtType .right {
-  display: table;
-  height: 50px; }
-  .debtType .right span {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: left; }
+    .debtType .right span {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: left; }
 
 .facebookLogin {
   background-image: url(../img/facebook-login.png);
@@ -116,9 +134,9 @@ a {
   color: white;
   -o-text-overflow: clip;
   text-overflow: clip;
-  background: -webkit-linear-gradient(45deg, rgba(0, 222, 34, 0.2) 25%, transparent 25%, transparent 50%, rgba(0, 222, 34, 0.2) 50%, rgba(0, 222, 34, 0.2) 75%, transparent 75%, transparent 0), #78ff8d;
-  background: -moz-linear-gradient(45deg, rgba(0, 222, 34, 0.2) 25%, transparent 25%, transparent 50%, rgba(0, 222, 34, 0.2) 50%, rgba(0, 222, 34, 0.2) 75%, transparent 75%, transparent 0), #78ff8d;
-  background: linear-gradient(45deg, rgba(0, 222, 34, 0.2) 25%, transparent 25%, transparent 50%, rgba(0, 222, 34, 0.2) 50%, rgba(0, 222, 34, 0.2) 75%, transparent 75%, transparent 0), #78ff8d;
+  background: -webkit-linear-gradient(45deg, rgba(0, 222, 34, 0.2) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(0, 222, 34, 0.2) 50%, rgba(0, 222, 34, 0.2) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0) 0), #78ff8d;
+  background: -moz-linear-gradient(45deg, rgba(0, 222, 34, 0.2) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(0, 222, 34, 0.2) 50%, rgba(0, 222, 34, 0.2) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0) 0), #78ff8d;
+  background: linear-gradient(45deg, rgba(0, 222, 34, 0.2) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(0, 222, 34, 0.2) 50%, rgba(0, 222, 34, 0.2) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0) 0), #78ff8d;
   background-position: auto auto;
   -webkit-background-origin: padding-box;
   background-origin: padding-box;
@@ -242,17 +260,24 @@ p.or {
     color: #000;
     top: 10px; }
 
-#connectUser {
+#detailMoreBtn {
   position: absolute;
   top: 20px;
   right: 10px;
   z-index: 10; }
-  #connectUser:before {
-    content: "b";
+  #detailMoreBtn:before {
+    content: "c";
     font-family: wooishui;
     position: relative;
-    top: 4px;
-    font-size: 1.6em;
+    top: 10px;
+    font-size: 1.2em;
     right: 5px; }
 
-/*# sourceMappingURL=style.css.map */
+.detailInner {
+  position: relative; }
+
+.popover-inner a.item-link.list-button {
+  border: none; }
+
+#submitDebtBtn.disabled {
+  opacity: .5; }

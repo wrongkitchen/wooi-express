@@ -12,7 +12,7 @@ body{
 }
 a{ 
 	text-decoration: none; color: green; border-bottom: 1px dashed green; 
-	&.headerBtn{ border: none; }
+	&.headerBtn, &.swipeout-delete, &.rejectBtn, &.rebornBtn{ border: none; }
 }
 
 .container{ margin: 0 auto; padding: 0 2em; }
@@ -37,6 +37,7 @@ a{
 	p{ padding:20px 0 0 0; margin:0 20px; border-top: 1px solid #ccc; }
 }
 .debtType{
+	position:relative;
 	.left{ 
 		text-align: right; 
 		img{ height:50px; }
@@ -46,9 +47,17 @@ a{
 		.icon-caret-right{ color:#216C2A; opacity: 1; }
 		.icon-caret-left{ color:$grey-theme-color; opacity: .8; }
 		.icon-banknote{ color:#216C2A; }
+		.get, .give{ 
+			font-size:12px; line-height: 12px; top:-10px;
+			position:absolute; left:0; text-align: center; width:100%; 
+		}
+		.get{ display: none; }
+		.give{ display: block; }
 		&.creatorDebt{
 			.icon-caret-right{ color:$grey-theme-color; opacity: .8; }
 			.icon-caret-left{ color:#216C2A; opacity: 1; }
+			.give{ display: none; }
+			.get{ display: block; }
 		}
 	} 
 	.right{ 

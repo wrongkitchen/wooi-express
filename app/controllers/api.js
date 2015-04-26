@@ -129,12 +129,14 @@ router.get('/connectUser', function (req, res, next) {
 					var userData = data;
 					Debt.update({ creditorUID: _q.from, debtorsUID : uid }, 
 								{ creditorUID: _q.to, creditorName: userData.name }, 
+								{ multi: true }, 
 					function(err, data){
 						if(err){
 							res.status(500).jsonp({ error: err });
 						} else {
 							Debt.update({ debtorsUID: _q.from, creditorUID : uid }, 
 								{ debtorsUID: _q.to, debtorsName: userData.name }, 
+								{ multi: true },
 							function(err, data){
 								if(err)
 									res.status(500).jsonp({ error: err });

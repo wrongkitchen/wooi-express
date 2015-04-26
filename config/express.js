@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compress = require('compression');
 var methodOverride = require('method-override');
+var MongoStore = require('connect-mongo')(session);
 var passport = require('passport'),
 	FacebookStrategy = require('passport-facebook').Strategy;
 var mongoose = require('mongoose');
@@ -26,10 +27,11 @@ module.exports = function(app, config) {
 	app.use(cookieParser());
 	app.use(compress());
 	app.use(session({ 
+		store: new MongoStore({ mongooseConnection: mongoose.connection }),
 		secret: 'p)wt{vshTcd`ft"+hw:}-&IC`Ou0~ap,|PJ/!qLm3"tiB1E{V#BF6T[Z0bvb;QE4',
 		cookie: { maxAge: 2628000000 },
-		saveUninitialized: true,
-         resave: true
+		saveUninitialized: false,
+		resave: false
 	}));
 	app.use(passport.initialize());
 	app.use(passport.session());
@@ -37,6 +39,8 @@ module.exports = function(app, config) {
 	app.use(methodOverride());
 	app.use(function (req, res, next) {
 		res.locals = {
+			redirectURL: process.env.REDIRECT_URL || 'http://www.wooishui.com',
+			ga: process.env.GA || 'UA-37456538-10',
 			fbAppID: config.FACEBOOK_APP_ID,
 			user: req.user || {},
 			rootURL: process.env.appDoman || 'http://wooishui.herokuapp.com'
@@ -85,7 +89,10 @@ module.exports = function(app, config) {
 		successRedirect: '/',
 		failureRedirect: '/login' 
 	}));
-	app.all('/logout', function(req, res){ req.logout(); res.redirect('/'); });
+	app.all('/logout', function(req, res){ 
+		req.logout(); 
+		res.redirect('/'); 
+	});
 
 	app.use(function (req, res, next) {
 		var err = new Error('Not Found');
